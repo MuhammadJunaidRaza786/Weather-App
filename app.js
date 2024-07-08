@@ -4,8 +4,6 @@ let unit = document.getElementById("Unit");
 // console.log(unit);
 let Appid = "d20d72effaffd25839c3334bc8db931f";
 
-
-
 unit.addEventListener("change", Click);
 city.addEventListener("change", Click);
 
@@ -21,7 +19,6 @@ function Click() {
   let location = document.getElementById("location");
   let temperature = document.getElementById("temperature");
   let description = document.getElementById("description");
-
   let unit_s;
   if (unit_value == "metric") {
     unit_s = "C";
@@ -30,7 +27,7 @@ function Click() {
   } else if (unit_value == "standard") {
     unit_s = "K";
   }
-    
+
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city_value}&units=${unit_value}&appid=${Appid}`
   )
@@ -39,14 +36,12 @@ function Click() {
     })
     .then(function (data) {
       console.log(data);
-
-      const { name, weather, main } = data;
+      const { name, weather, main, wind } = data;
       location.innerHTML = name;
       temperature.innerHTML = `${Math.floor(main.temp)} °${unit_s}`;
       description.innerHTML = weather[0].description;
     })
     .catch(function (error) {
-        console.log(`Error : ${error}`)
-    })
-
+      console.log(`Error : ${error}`);
+    });
 }
